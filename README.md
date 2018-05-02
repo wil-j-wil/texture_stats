@@ -2,7 +2,7 @@
 
 A Python implementation of Josh McDermott’s texture statistics
 
-Based on original Matlab implementation in the [Sound Texture Synthesis Toolbox](http://mcdermottlab.mit.edu/Sound_Texture_Synthesis_Toolbox_v1.7.zip)
+Based on original Matlab implementation in the [Sound Texture Synthesis Toolbox](http://mcdermottlab.mit.edu/Sound_Texture_Synthesis_Toolbox_v1.7.zip) (see [http://mcdermottlab.mit.edu/downloads.html](http://mcdermottlab.mit.edu/downloads.html))
 
 Also contains filter bank code.
 
