@@ -116,18 +116,6 @@ for k in range(0, sound_texture.env_ac.shape[0]):
     if k == 2:
         title('Mod. C2 Comparison (Mod Freq. (Hz) x C2 Correlation, dots=real, crosses=imag)')
 
-figure(9)
-clf()
-for k in range(0, sound_texture.env_ac.shape[0]):
-    subplot(6, 6, k + 1)
-    semilogx(sound_texture.mod_c2_center_freqs, sound_texture.mod_c2[k, :, 0], 'bo-', lw=0.7, ms=3)
-    semilogx(sound_texture.mod_c2_center_freqs, sound_texture.mod_c2[k, :, 1], 'bx-', lw=0.7, ms=5)
-    semilogx(sound_texture_2.mod_c2_center_freqs, sound_texture_2.mod_c2[k, :, 0], 'ro-', lw=0.7, ms=3)
-    semilogx(sound_texture_2.mod_c2_center_freqs, sound_texture_2.mod_c2[k, :, 1], 'rx-', lw=0.7, ms=5)
-    gca().set_ylim([-1, 1])
-    if k == 2:
-        title('Mod. C2 Comparison (Mod Freq. (Hz) x C2 Correlation, dots=real, crosses=imag)')
-
 figure(10)
 clf()
 for k in range(0, sound_texture.mod_c1.shape[2]):
