@@ -7,7 +7,7 @@ proj_path = ''
 file_name = 'stim118_puppy_whining'
 file_name_2 = 'stim7_applause'
 
-# filter bank analysis of audio signal
+# statistical analysis of two audio signals
 y, fs = lb.load(proj_path + 'audio/' + file_name + '.wav', sr=None)
 y_2, fs_2 = lb.load(proj_path + 'audio/' + file_name_2 + '.wav', sr=None)
 
