@@ -57,6 +57,7 @@ class SoundTexture(object):
         self.subband_ac = []
         self.mod_power_center_freqs = []
         self.mod_c2_center_freqs = []
+        self.mod_c1_center_freqs = []
         self.audio_cutoffs_hz = []
         self.subband_mean = np.zeros(self.n_audio_channels + 2)
         self.subband_var = np.zeros(self.n_audio_channels + 2)
@@ -141,7 +142,7 @@ class SoundTexture(object):
             m = np.sqrt(m) / x_mean
         elif n == 3:
             m2 = np.sum(win * ((x - x_mean) ** 2))
-            m = np.sum(win * ((x - x_mean) ** 3)) / (m2 ** (3/2))
+            m = np.sum(win * ((x - x_mean) ** 3)) / (m2 ** (3.0 / 2.0))
         elif n == 4:
             m2 = np.sum(win * ((x - x_mean) ** 2))
             m = np.sum(win * ((x - x_mean) ** 4)) / (m2 ** 2)
@@ -306,10 +307,14 @@ class SoundTexture(object):
             self.env_skew[j] = self.stat_central_moment_win(subband_envs[:, j], 3, measurement_win, self.env_mean[j])
             self.env_kurt[j] = self.stat_central_moment_win(subband_envs[:, j], 4, measurement_win, self.env_mean[j])
             temp, bins = np.histogram(subbands[:, j], self.n_hist_bins)
+            temp = temp.astype(float, copy=False)
+            bins = bins.astype(float, copy=False)
             bins = (bins[:-1] + bins[1:]) / 2  # get bin centres
             self.subband_hist[j, :self.n_hist_bins] = temp / np.sum(temp)
             self.subband_bins[j, :self.n_hist_bins] = bins
             temp, bins = np.histogram(subband_envs[:, j], self.n_hist_bins)
+            temp = temp.astype(float, copy=False)
+            bins = bins.astype(float, copy=False)
             bins = (bins[:-1] + bins[1:]) / 2  # get bin centres
             self.env_hist[j, :self.n_hist_bins] = temp / np.sum(temp)
             self.env_bins[j, :self.n_hist_bins] = bins
@@ -332,9 +337,10 @@ class SoundTexture(object):
                 mod_c1_bank.generate_subbands(subband_envs[:, i])
                 f_envs[:, i] = mod_c1_bank.subbands[:, k + c1_ind]  # exclude first
             self.mod_c1[:, :, k] = self.stat_corr_filt_win_full(f_envs, self.use_zp, measurement_win)
+        self.mod_c1_center_freqs = mod_c1_bank.center_freqs
         # subband autocorrelation
         sub_ac_n_smp = np.round(self.num_sub_ac_period / self.audio_cutoffs_hz * self.audio_sr)
-        sub_ac_n_smp[sub_ac_n_smp > self.num_sub_ac_period / 20 * self.audio_sr] = self.num_sub_ac_period / 20 * self.audio_sr
+        sub_ac_n_smp[sub_ac_n_smp > self.num_sub_ac_period / 20.0 * self.audio_sr] = self.num_sub_ac_period / 20.0 * self.audio_sr
         temp = self.autocorr_mult_zp(subbands, self.sub_ac_win_choice, self.sub_ac_undo_win)
         l2 = subbands.shape[0]
         c2 = l2 / 2

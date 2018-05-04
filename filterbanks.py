@@ -210,6 +210,7 @@ class EnvAutocorrelation(FilterBank):
 
     @staticmethod
     def make_filters(n, nyquist, lags_smp, nfreqs, freqs):
+        lags_smp = lags_smp.astype(float, copy=False)
         filters = np.zeros([nfreqs + 1, n])
         hz_cutoffs = np.zeros(n)
         for k in range(0, n):
