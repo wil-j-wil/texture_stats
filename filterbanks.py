@@ -31,15 +31,15 @@ class FilterBank(object):
     @staticmethod
     def check_limits(leny, fs, high_lim):
         if np.remainder(leny, 2) == 0:
-            nfreqs = leny / 2
+            nfreqs = int(leny / 2)
             max_freq = fs / 2
         else:
-            nfreqs = (leny - 1) / 2
+            nfreqs = int((leny - 1) / 2)
             max_freq = fs * (leny - 1) / 2 / leny
         freqs = np.linspace(0, max_freq, nfreqs + 1)
         if high_lim > fs / 2:
             high_lim = max_freq
-        return high_lim, freqs, int(nfreqs)
+        return high_lim, freqs, nfreqs
 
     def generate_subbands(self, signal):
         if signal.shape[0] == 1:  # turn into column vector
